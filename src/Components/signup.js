@@ -5,6 +5,7 @@ export const Signup = ({
   submitHandler,
   listUserHandler,
   updateEmailHandler,
+  deleteUserHandler,
 }) => {
   return (
     <div>
@@ -25,10 +26,13 @@ export const Signup = ({
           <button type="submit">Sign Up</button>
         </form>
       </div>
-      <button onClick={listUserHandler}> List users </button>
+      <h3>Read Users</h3>
+      <button onClick={listUserHandler}> List users (check console) </button>
       <div>
         <form onSubmit={updateEmailHandler}>
-          <h3>Enter your username & the email that you want to change to </h3>
+          <h3>
+            Update: Enter your username & the email that you want to change to{" "}
+          </h3>
           <input
             placeholder="username"
             onChange={(e) => setUsername(e.target.value)}
@@ -38,6 +42,14 @@ export const Signup = ({
             onChange={(e) => setEmail(e.target.value)}
           />
           <button type="submit"> Update email </button>
+        </form>
+        <form onSubmit={deleteUserHandler}>
+          <h3> Delete User </h3>
+          <input
+            placeholder="username"
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <button type="submit"> Delete user </button>
         </form>
       </div>
     </div>

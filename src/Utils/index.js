@@ -70,3 +70,21 @@ export const fetchRequestUpdateEmail = async (username, email) => {
     console.log(error);
   }
 };
+
+export const fetchRequestDeleteUser = async (username) => {
+  try {
+    const response = await fetch(`http://localhost:5000/user/${username}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      params: JSON.stringify({
+        username: username,
+      }),
+    });
+    const data = await response.json();
+    console.log(data.message);
+  } catch (error) {
+    console.log(error);
+  }
+};

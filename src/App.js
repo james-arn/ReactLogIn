@@ -6,6 +6,7 @@ import {
   getUser,
   fetchRequestListUsers,
   fetchRequestUpdateEmail,
+  fetchRequestDeleteUser,
 } from "./Utils";
 
 function App() {
@@ -37,6 +38,11 @@ function App() {
     fetchRequestUpdateEmail(username, email, setUser);
   };
 
+  const deleteUserHandler = (e) => {
+    e.preventDefault();
+    fetchRequestDeleteUser(username);
+  };
+
   return (
     <div className="App">
       {user ? <h1> Welcome {user} </h1> : <h1>Please log in</h1>}
@@ -48,6 +54,7 @@ function App() {
           submitHandler={submitHandler}
           listUserHandler={listUserHandler}
           updateEmailHandler={updateEmailHandler}
+          deleteUserHandler={deleteUserHandler}
         />
       )}
     </div>
