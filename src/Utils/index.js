@@ -1,11 +1,31 @@
-//no need to desructure - as  this ins't jsx it's  ajs function.
-export const getUser = (setUser) => {
+//create user without authorisation/
+// no need to desructure - as  this ins't jsx it's  ajs function.
+// export const getUser = (setUser) => {
+//   try {
+//     const jsonUser = localStorage.getItem("user"); //gets
+//     const savedUser = JSON.parse(jsonUser); // now JS object
+//     if (savedUser) {
+//       setUser(savedUser);
+//     }
+//   } catch (error) {
+//     console.log(error);
+//   }
+// };
+
+//create user with authroisation
+export const getUser = async (setUser) => {
   try {
-    const jsonUser = localStorage.getItem("user"); //gets
-    const savedUser = JSON.parse(jsonUser); // now JS object
+    const token = localStorage.getItem("MyToken"); //gets token
+    const response = await fetch(`${process.env.REACT_APP_REST_API}token`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    const data = await response.json();
+    const savedUser = data.user; // now JS object
     if (savedUser) {
       setUser(savedUser);
     }
+    console.log("connect");
   } catch (error) {
     console.log(error);
   }
@@ -20,7 +40,7 @@ export const fetchRequestAddUser = async (
   setUser
 ) => {
   try {
-    const response = await fetch("http://localhost:5000/user", {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -34,27 +54,28 @@ export const fetchRequestAddUser = async (
     const data = await response.json();
     console.log(data);
     setUser(data.user); //saves data to user
-    // localStorage.setItem("MyToken", data.token);
+    localStorage.setItem("MyToken", data.token);
   } catch (error) {
     console.log(error);
   }
 };
 
-export const fetchRequestListUsers = async (username) => {
+export const fetchRequestListUsers = async () => {
   try {
-    const response = await fetch("http://localhost:5000/user", {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
       method: "GET",
     });
     const data = await response.json();
     console.log(data.userList);
   } catch (error) {
     console.log(error);
+    console.log(`${process.env.REACT_APP_REST_API}user`);
   }
 };
 
 export const fetchRequestUpdateEmail = async (username, email) => {
   try {
-    const response = await fetch("http://localhost:5000/user", {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -73,15 +94,18 @@ export const fetchRequestUpdateEmail = async (username, email) => {
 
 export const fetchRequestDeleteUser = async (username) => {
   try {
-    const response = await fetch(`http://localhost:5000/user/${username}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      params: JSON.stringify({
-        username: username,
-      }),
-    });
+    const response = await fetch(
+      `${process.env.REACT_APP_REST_API}user/${username}`,
+      {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        params: JSON.stringify({
+          username: username,
+        }),
+      }
+    );
     const data = await response.json();
     console.log(data.message);
   } catch (error) {

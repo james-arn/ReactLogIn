@@ -6,15 +6,20 @@ export const Signup = ({
   listUserHandler,
   updateEmailHandler,
   deleteUserHandler,
+  loginToggle,
+  setLoginToggle,
 }) => {
   return (
     <div>
       <div>
         <form onSubmit={submitHandler}>
-          <input
-            placeholder="username"
-            onChange={(e) => setUsername(e.target.value)}
-          />
+          {!loginToggle && (
+            <input
+              placeholder="username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          )}
+
           <input
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}
@@ -23,8 +28,16 @@ export const Signup = ({
             placeholder="password"
             onChange={(e) => setPass(e.target.value)}
           />
-          <button type="submit">Sign Up</button>
+          <button type="submit"> {!loginToggle ? "Sign up" : "Log in"} </button>
         </form>
+        <button
+          onClick={(e) => {
+            setLoginToggle(!loginToggle);
+            setUsername();
+          }}
+        >
+          {!loginToggle ? "Already have an account?" : "Need to register?"}
+        </button>
       </div>
       <h3>Read Users</h3>
       <button onClick={listUserHandler}> List users (check console) </button>
