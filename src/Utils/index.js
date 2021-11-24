@@ -12,7 +12,7 @@
 //   }
 // };
 
-//create user with authroisation
+//log in
 export const getUser = async (setUser) => {
   try {
     const token = localStorage.getItem("MyToken"); //gets token
@@ -25,7 +25,6 @@ export const getUser = async (setUser) => {
     if (savedUser) {
       setUser(savedUser);
     }
-    console.log("connect");
   } catch (error) {
     console.log(error);
   }

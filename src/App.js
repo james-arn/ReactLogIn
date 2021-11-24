@@ -27,7 +27,7 @@ function App() {
     if (username) {
       fetchRequestAddUser(username, email, pass, setUser);
     } else {
-      fetchRequestAddUser(email, pass, setUser);
+      getUser(email, pass, setUser);
     }
     //// FOR LOCAL STORAGE:
     // const jsonObj = JSON.stringify(userObj);
@@ -48,19 +48,34 @@ function App() {
     fetchRequestDeleteUser(username);
   };
 
+  const logOutHandler = () => {
+    setUser();
+    localStorage.removeItem("MyToken");
+  };
+
   return (
     <div className="App">
-      <Signup
-        setUsername={setUsername}
-        setEmail={setEmail}
-        setPass={setPass}
-        submitHandler={submitHandler}
-        listUserHandler={listUserHandler}
-        updateEmailHandler={updateEmailHandler}
-        deleteUserHandler={deleteUserHandler}
-        loginToggle={loginToggle}
-        setLoginToggle={setLoginToggle}
-      />
+      {user ? (
+        <div>
+          <h1>Welcome {user}</h1>
+          <button onClick={logOutHandler}>Log out</button>
+        </div>
+      ) : (
+        <h1>Please log in</h1>
+      )}
+      {!user && (
+        <Signup
+          setUsername={setUsername}
+          setEmail={setEmail}
+          setPass={setPass}
+          submitHandler={submitHandler}
+          listUserHandler={listUserHandler}
+          updateEmailHandler={updateEmailHandler}
+          deleteUserHandler={deleteUserHandler}
+          loginToggle={loginToggle}
+          setLoginToggle={setLoginToggle}
+        />
+      )}
     </div>
   );
 }
