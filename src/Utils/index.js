@@ -12,7 +12,7 @@
 //   }
 // };
 
-//log in
+//stay logged in on page load useeffect
 export const getUser = async (setUser) => {
   try {
     const token = localStorage.getItem("MyToken"); //gets token
@@ -22,9 +22,29 @@ export const getUser = async (setUser) => {
     });
     const data = await response.json();
     const savedUser = data.user; // now JS object
+    console.log(savedUser);
     if (savedUser) {
       setUser(savedUser);
     }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+//new log in from login button
+export const Login = async (email, pass, setUser) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}login`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        email: email,
+        pass: pass,
+      }),
+    });
+    const data = await response.json();
+    setUser(data.user);
+    localStorage.setItem("MyToken", data.token);
   } catch (error) {
     console.log(error);
   }

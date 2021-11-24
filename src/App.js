@@ -7,6 +7,7 @@ import {
   fetchRequestListUsers,
   fetchRequestUpdateEmail,
   fetchRequestDeleteUser,
+  Login,
 } from "./Utils";
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
     if (username) {
       fetchRequestAddUser(username, email, pass, setUser);
     } else {
-      getUser(email, pass, setUser);
+      Login(email, pass, setUser);
     }
     //// FOR LOCAL STORAGE:
     // const jsonObj = JSON.stringify(userObj);
@@ -57,7 +58,7 @@ function App() {
     <div className="App">
       {user ? (
         <div>
-          <h1>Welcome {user}</h1>
+          <h1>Welcome {user.username}</h1>
           <button onClick={logOutHandler}>Log out</button>
         </div>
       ) : (
