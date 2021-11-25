@@ -19,7 +19,6 @@ export const Signup = ({
               onChange={(e) => setUsername(e.target.value)}
             />
           )}
-
           <input
             placeholder="email"
             onChange={(e) => setEmail(e.target.value)}

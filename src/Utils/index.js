@@ -1,17 +1,7 @@
-//create user without authorisation/
-// no need to desructure - as  this ins't jsx it's  ajs function.
-// export const getUser = (setUser) => {
-//   try {
-//     const jsonUser = localStorage.getItem("user"); //gets
-//     const savedUser = JSON.parse(jsonUser); // now JS object
-//     if (savedUser) {
-//       setUser(savedUser);
-//     }
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+// below is request obj we would send to rest api. exactly the same as thunderlient.
+//this is the bridge between react app and back end rest api.
 
+//USERS
 //stay logged in on page load useeffect
 export const getUser = async (setUser) => {
   try {
@@ -50,8 +40,7 @@ export const Login = async (email, pass, setUser) => {
   }
 };
 
-// below is request obj we would send to rest api. exactly the same as thunderlient.
-//this is the bridge between react app and back end rest api.
+//add user to database
 export const fetchRequestAddUser = async (
   username,
   email,
@@ -79,6 +68,7 @@ export const fetchRequestAddUser = async (
   }
 };
 
+// READ lists all users in database
 export const fetchRequestListUsers = async () => {
   try {
     const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
@@ -92,6 +82,7 @@ export const fetchRequestListUsers = async () => {
   }
 };
 
+//Update
 export const fetchRequestUpdateEmail = async (username, email) => {
   try {
     const response = await fetch(`${process.env.REACT_APP_REST_API}user`, {
@@ -111,6 +102,7 @@ export const fetchRequestUpdateEmail = async (username, email) => {
   }
 };
 
+//Delete
 export const fetchRequestDeleteUser = async (username) => {
   try {
     const response = await fetch(
@@ -129,5 +121,20 @@ export const fetchRequestDeleteUser = async (username) => {
     console.log(data.message);
   } catch (error) {
     console.log(error);
+  }
+};
+
+//MOVIES
+export const fetchRequestListMovies = async (setMovies) => {
+  try {
+    const response = await fetch(`${process.env.REACT_APP_REST_API}movie`, {
+      method: "GET",
+    });
+    const data = await response.json();
+    setMovies(data.movieList);
+    console.log(data.movieList);
+  } catch (error) {
+    console.log(error);
+    console.log(`${process.env.REACT_APP_REST_API}user`);
   }
 };
